@@ -1,0 +1,10 @@
+name: CrumblesUI
+version: '1.0-SNAPSHOT'
+main: me.crumbs.CrumblesUI
+api-version: '1.21'
+authors: [ Crumbs ]
+description: UI Library for Developers
+commands:
+  testui:
+    description: "balls"
+    usage: /<command>
