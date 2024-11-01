@@ -1,7 +1,9 @@
 package me.crumbs.commands;
 
+import me.crumbs.UIManager;
 import me.crumbs.ui.Options;
-import me.crumbs.ui.Window;
+import me.crumbs.ui.Div;
+import me.crumbs.ui.UI;
 import me.crumbs.utils.Vec2;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,10 +22,10 @@ public class TestUI implements CommandExecutor {
             return true;
         }
 
-        var window = new Window.Builder(new Vec2(9, 3))
+        var root = new Div.Builder(new Vec2(9, 3))
             .body(
-                Window.window(new Vec2(3, 3),
-                    Window.window(new Vec2(1, 1)).build(new Options()
+                Div.div(new Vec2(3, 3),
+                    Div.div(new Vec2(1, 1)).build(new Options()
                         .pos(1, 1)
                         .bg(Material.GREEN_STAINED_GLASS_PANE, ChatColor.GREEN + "Button", null)
                     )
@@ -36,9 +38,12 @@ public class TestUI implements CommandExecutor {
             );
 
         var inv = Bukkit.createInventory(player, 27);
-        window.render(inv);
+        root.render(inv);
 
         player.openInventory(inv);
+        UIManager.getInstance()
+            .activeWindows
+            .put(player, new UI(inv, root));
         return true;
     }
 }

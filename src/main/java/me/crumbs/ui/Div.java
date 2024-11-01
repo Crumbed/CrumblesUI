@@ -1,27 +1,26 @@
 package me.crumbs.ui;
 
 import me.crumbs.utils.Cell;
-import me.crumbs.utils.Tuple;
 import me.crumbs.utils.Vec2;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class Window {
+public class Div {
     // 0: x, 1: y
     public final Vec2 size;
-    public Window[] children;
-    public HashMap<Window, Vec2> childrenPositions;
+    public Div[] children;
+    public HashMap<Div, Vec2> childrenPositions;
     public final Options options;
 
-    private Window(Vec2 size, ArrayList<Window> children, Options options) {
+    private Div(Vec2 size, ArrayList<Div> children, Options options) {
         this.size = size;
-        this.children = children.toArray(Window[]::new);
+        this.children = children.toArray(Div[]::new);
         this.options = options;
         childrenPositions = new HashMap<>();
 
@@ -33,7 +32,7 @@ public class Window {
     /**
     * @param size   null if determined during build
     */
-    public static Builder window(Vec2 size, Window... body) {
+    public static Builder div(Vec2 size, Div... body) {
         var builder = new Builder(size);
         builder.body(body);
 
@@ -107,10 +106,9 @@ public class Window {
     }
 
 
-
     public static class Builder {
         public Vec2 size;
-        public ArrayList<Window> children = null;
+        public ArrayList<Div> children = null;
 
         /**
         * @param size   null if determined during build
@@ -119,7 +117,7 @@ public class Window {
             this.size = size;
         }
 
-        public Builder body(Window... body) {
+        public Builder body(Div... body) {
             if (children == null) {
                 children = new ArrayList<>(Arrays.asList(body));
                 return this;
@@ -128,8 +126,8 @@ public class Window {
             return this;
         }
 
-        public Window build(Options ops) {
-            return new Window(size, children, ops);
+        public Div build(Options ops) {
+            return new Div(size, children, ops);
         }
     }
 }
